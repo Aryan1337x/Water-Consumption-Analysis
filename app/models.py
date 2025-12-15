@@ -6,7 +6,6 @@ class WaterReading(db.Model):
     date = db.Column(db.Date, nullable=False, unique=True)
     reading_value = db.Column(db.Float, nullable=False)
     consumption = db.Column(db.Float, default=0.0)
-    # is_spike could be stored or calculated on the fly. Detailed in plan as stored.
     is_spike = db.Column(db.Boolean, default=False)
     
     def __repr__(self):

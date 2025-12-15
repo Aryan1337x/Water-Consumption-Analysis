@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.services import add_reading_service, get_dashboard_stats, get_all_readings, delete_reading_service
 from datetime import datetime
+import os
 
-bp = Blueprint('main', __name__)
+template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
+bp = Blueprint('main', __name__, template_folder=template_dir)
 
 @bp.route('/')
 def index():
