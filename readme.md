@@ -41,7 +41,7 @@ Follow these steps to get the project running on your local machine:
 
 1.  **Clone the Repository**
     ```bash
-    git clone [<repository-url>](https://github.com/Aryan1337x/Water-Consumption-Analysis.git)
+    git clone https://github.com/Aryan1337x/Water-Consumption-Analysis.git
     cd Water
     ```
 
@@ -72,4 +72,5 @@ Follow these steps to get the project running on your local machine:
 
 Made by Aryan  
 Instagram: [@aryan.skid](https://www.instagram.com/aryan.skid/)
+
 
