@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="cost-analysis">
+    <h2>Cost Analysis</h2>
+
+    <!-- Tariff Settings -->
+    <div class="card tariff-card">
+        <h3>Current Water Tariff</h3>
+        <p class="big-value">{{ current_tariff }} / Unit</p>
+        <form action="{{ url_for('main.update_tariff') }}" method="POST" class="inline-form">
+            <input type="number" step="0.01" name="cost" placeholder="New Tariff" required>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+    <!-- Monthly Summary -->
+    <div class="card summary-card">
+        <h3>Estimated Cost (Current Month)</h3>
+        <p class="big-value">{{ total_monthly_cost }}</p>
+    </div>
+
+    <!-- Details Table -->
+    <h3>Daily Breakdown</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Consumption (Liters)</th>
+                <th>Daily Cost</th>
+                <th>Category</th>
+                <th>Wastage Cost (Est.)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in analysis_data %}
+            <tr class="{{ 'spike' if row.is_spike else '' }}">
+                <td>{{ row.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ row.consumption }} L</td>
+                <td>{{ row.cost }}</td>
+                <td>
+                    {{ row.category }}
+                    {% if row.is_spike %}
+                    <br><small class="danger-text">(Spike Detected)</small>
+                    {% endif %}
+                </td>
+                <td class="{{ 'danger-text' if row.wastage_cost > 0 else '' }}">
+                    {{ row.wastage_cost if row.wastage_cost > 0 else '-' }}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No data available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .big-value {
+        font-size: 2em;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    .tariff-card,
+    .summary-card {
+        background: #f8f9fa;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+
+    .inline-form {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .danger-text {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
